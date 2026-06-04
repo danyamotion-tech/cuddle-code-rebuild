@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Instagram, Twitter, Linkedin } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   const navLinks = [
     { label: "Reviews", path: "/" },
     { label: "About", path: "/about" },
   ];
+  if (user) navLinks.push({ label: "Friends", path: "/friends" });
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -46,6 +49,19 @@ const Header = () => {
           <a href="#" aria-label="LinkedIn" className="text-muted-foreground hover:text-foreground transition-colors">
             <Linkedin className="w-4 h-4" />
           </a>
+          <span className="w-px h-4 bg-foreground/20 mx-1" />
+          {user ? (
+            <button
+              onClick={() => signOut()}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link to="/auth" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Sign in
+            </Link>
+          )}
         </div>
 
         <button
@@ -78,6 +94,18 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+          {user ? (
+            <button
+              onClick={() => { signOut(); setMobileOpen(false); }}
+              className="text-lg text-muted-foreground hover:text-foreground"
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link to="/auth" onClick={() => setMobileOpen(false)} className="text-lg text-muted-foreground hover:text-foreground">
+              Sign in
+            </Link>
+          )}
           <div className="flex gap-6 mt-4">
             <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-foreground transition-colors">
               <Instagram className="w-5 h-5" />
