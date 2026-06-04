@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Instagram, Twitter, Linkedin, Users } from "lucide-react";
+import { Menu, X, Instagram, Twitter, Linkedin } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
