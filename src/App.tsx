@@ -11,6 +11,7 @@ import ReviewDetail from "./pages/ReviewDetail";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Friends from "./pages/Friends";
+import Profile from "./pages/Profile";
 import { AuthProvider } from "@/hooks/useAuth";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/reviews/:slug" element={<><Header /><ReviewDetail /><Footer /></>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/friends" element={<><Header /><Friends /><Footer /></>} />
+            <Route path="/profile" element={<><Header /><Profile /><Footer /></>} />
             <Route path="*" element={<><Header /><NotFound /><Footer /></>} />
           </Routes>
         </AuthProvider>

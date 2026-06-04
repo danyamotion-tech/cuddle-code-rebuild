@@ -12,7 +12,10 @@ const Header = () => {
     { label: "Reviews", path: "/" },
     { label: "About", path: "/about" },
   ];
-  if (user) navLinks.push({ label: "Friends", path: "/friends" });
+  if (user) {
+    navLinks.push({ label: "Friends", path: "/friends" });
+    navLinks.push({ label: "Profile", path: "/profile" });
+  }
 
   const isActive = (path: string) => location.pathname === path;
 

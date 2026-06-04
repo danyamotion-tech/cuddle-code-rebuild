@@ -14,6 +14,32 @@ export type Database = {
   }
   public: {
     Tables: {
+      favorite_films: {
+        Row: {
+          created_at: string
+          movie_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          movie_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          movie_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorite_films_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       follows: {
         Row: {
           created_at: string
@@ -111,6 +137,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          birth_date: string | null
           created_at: string
           display_name: string | null
           id: string
@@ -120,6 +147,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          birth_date?: string | null
           created_at?: string
           display_name?: string | null
           id: string
@@ -129,6 +157,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          birth_date?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
@@ -136,6 +165,44 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      user_reviews: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          movie_id: number
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          movie_id: number
+          rating?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          movie_id?: number
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_reviews_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
