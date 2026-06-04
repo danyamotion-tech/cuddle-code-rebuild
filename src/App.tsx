@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import ReviewDetail from "./pages/ReviewDetail";
 import NotFound from "./pages/NotFound";
+import Auth from "./pages/Auth";
+import Friends from "./pages/Friends";
+import { AuthProvider } from "@/hooks/useAuth";
 
 const queryClient = new QueryClient();
 
@@ -18,12 +21,16 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<><Header /><About /><Footer /></>} />
-          <Route path="/reviews/:slug" element={<><Header /><ReviewDetail /><Footer /></>} />
-          <Route path="*" element={<><Header /><NotFound /><Footer /></>} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<><Header /><About /><Footer /></>} />
+            <Route path="/reviews/:slug" element={<><Header /><ReviewDetail /><Footer /></>} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/friends" element={<><Header /><Friends /><Footer /></>} />
+            <Route path="*" element={<><Header /><NotFound /><Footer /></>} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
