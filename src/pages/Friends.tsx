@@ -39,12 +39,19 @@ const Friends = () => {
     queryKey: ["following", user?.id],
     enabled: !!user,
     queryFn: async (): Promise<Profile[]> => {
-      const { data, error } = await supabase
+      const { data: rows, error } = await supabase
         .from("follows")
-        .select("following_id, profiles!follows_following_id_fkey(id, username, display_name, avatar_url)")
+        .select("following_id")
         .eq("follower_id", user!.id);
       if (error) throw error;
-      return (data ?? []).map((r: any) => r.profiles).filter(Boolean);
+      const ids = (rows ?? []).map((r) => r.following_id);
+      if (ids.length === 0) return [];
+      const { data, error: e2 } = await supabase
+        .from("profiles")
+        .select("id, username, display_name, avatar_url")
+        .in("id", ids);
+      if (e2) throw e2;
+      return data ?? [];
     },
   });
 
@@ -52,12 +59,19 @@ const Friends = () => {
     queryKey: ["followers", user?.id],
     enabled: !!user,
     queryFn: async (): Promise<Profile[]> => {
-      const { data, error } = await supabase
+      const { data: rows, error } = await supabase
         .from("follows")
-        .select("follower_id, profiles!follows_follower_id_fkey(id, username, display_name, avatar_url)")
+        .select("follower_id")
         .eq("following_id", user!.id);
       if (error) throw error;
-      return (data ?? []).map((r: any) => r.profiles).filter(Boolean);
+      const ids = (rows ?? []).map((r) => r.follower_id);
+      if (ids.length === 0) return [];
+      const { data, error: e2 } = await supabase
+        .from("profiles")
+        .select("id, username, display_name, avatar_url")
+        .in("id", ids);
+      if (e2) throw e2;
+      return data ?? [];
     },
   });
 
