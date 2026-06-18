@@ -13,6 +13,7 @@ const Header = () => {
     { label: "About", path: "/about" },
   ];
   if (user) {
+    navLinks.push({ label: "Feed", path: "/feed" });
     navLinks.push({ label: "Friends", path: "/friends" });
     navLinks.push({ label: "Profile", path: "/profile" });
   }
